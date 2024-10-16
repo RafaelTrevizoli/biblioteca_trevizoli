@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Livros</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+</head>
+<body>
+    {% include 'catalogo/reusable/header.html' %}
+    
+    <div class="container mt-5">
+        <h2 class="mb-4">Lista de Livros Disponíveis</h2>
+        <div class="row">
+            {% for livro in livros %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ livro.titulo }}</h5>
+                            <p class="card-text"><strong>Autor:</strong> {{ livro.autor.nome }}</p>
+                            <p class="card-text"><strong>Editora:</strong> {{ livro.editora.nome }}</p>
+                            <p class="card-text"><strong>Gênero:</strong> {{ livro.genero.nome }}</p>
+                            <p class="card-text"><strong>Ano de Publicação:</strong> {{ livro.ano_publicacao }}</p>
+                            <p class="card-text"><strong>Descrição:</strong> {{ livro.descricao|truncatechars:20 }}{% if livro.descricao|length > 20 %}...{% endif %}</p>
+                            <div class="d-flex justify-content-between">
+                                <a href="{% url 'detalhes_livro' livro.pk %}" class="btn btn-sm btn-success">
+                                    <i class="bi bi-info-circle"></i> Detalhes
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% include 'catalogo/reusable/footer.html' %}
+</body>
+</html>
