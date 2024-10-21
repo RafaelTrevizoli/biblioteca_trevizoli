@@ -17,7 +17,7 @@ O **Biblioteca Trevizoli** é um sistema de gerenciamento de bibliotecas desenvo
 
 - **Backend**: Python, Django
 - **Banco de Dados**: MySQL
-- **Frontend**: HTML, CSS (framework CSS a ser definido)
+- **Frontend**: HTML, CSS, Bootstrap
 
 ## 📋 Pré-requisitos
 
