@@ -27,8 +27,4 @@ Antes de executar o projeto, certifique-se de ter os seguintes pré-requisitos i
 - MySQL
 - Pip (gerenciador de pacotes do Python)
 
-## 🚀 Como Executar o Projeto
-
-1. Clone o repositório para a sua máquina local:
-   ```bash
-   git clone https://github.com/seuusuario/biblioteca-trevizoli.git
+## 
