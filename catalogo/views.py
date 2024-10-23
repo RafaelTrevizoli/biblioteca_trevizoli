@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Livro, Autor, Editora, Genero
 from .forms import LivroForm, AutorForm, EditoraForm, GeneroForm
 
-# --- Livros ---
+# --- Livros --- #
 def listar_livros(request):
     livros = Livro.objects.all()
     return render(request, 'catalogo/livros/listar_livros.html', {'livros': livros})
@@ -44,7 +44,7 @@ def detalhes_livro(request, pk):
     livro = get_object_or_404(Livro, pk=pk)
     return render(request, 'catalogo/livros/detalhes_livro.html', {'livro': livro})
 
-# --- Autores ---
+# --- Autores --- #
 def listar_autores(request):
     autores = Autor.objects.all()
     return render(request, 'catalogo/autores/listar_autores.html', {'autores': autores})
@@ -85,7 +85,7 @@ def detalhes_autor(request, pk):
     autor = get_object_or_404(Autor, pk=pk)
     return render(request, 'catalogo/autores/detalhes_autor.html', {'autor': autor})
 
-# --- Editoras ---
+# --- Editoras --- #
 
 def listar_editoras_crud(request):
     editoras = Editora.objects.all()
@@ -123,7 +123,7 @@ def detalhes_editora(request, pk):
     editora = get_object_or_404(Editora, pk=pk)
     return render(request, 'catalogo/editoras/detalhes_editora.html', {'editora': editora})
 
-# --- Gêneros ---
+# --- Gêneros --- #
 
 def listar_generos_crud(request):
     generos = Genero.objects.all()
