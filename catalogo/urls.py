@@ -42,4 +42,12 @@ urlpatterns = [
     path('generos/<int:pk>/', views.detalhes_genero, name='detalhes_genero'),
     path('generos/editar/<int:pk>/', views.editar_genero, name='editar_genero'),
     path('generos/deletar/<int:pk>/', views.deletar_genero, name='deletar_genero'),
+
+    # --- Tags --- #
+    path('tags/', views.listar_tags_crud, name='listar_tags_crud'),
+    path('tags/criar/', views.criar_tag, name='criar_tag'),
+    path('tags/editar/<int:pk>/', views.editar_tag, name='editar_tag'),
+    path('tags/deletar/<int:pk>/', views.deletar_tag, name='deletar_tag'),
+    path('tags/<int:pk>/', views.detalhes_tag, name='detalhes_tag'),
+
 ]

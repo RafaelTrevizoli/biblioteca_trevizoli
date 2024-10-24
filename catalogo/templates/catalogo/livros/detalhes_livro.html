@@ -26,9 +26,22 @@
         <p class="card-text"><strong>Gênero:</strong> {{ livro.genero.nome }}</p>
         <p><strong>Descrição:</strong> {{ livro.descricao }}</p>
         <p><strong>Ano de Publicação:</strong> {{ livro.ano_publicacao }}</p>
+
+        <!-- Adicionando as tags -->
+        <p><strong>Tags:</strong>
+            {% if livro.tags.all %}
+                {% for tag in livro.tags.all %}
+                    {{ tag.nome }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            {% else %}
+                Nenhuma tag disponível.
+            {% endif %}
+        </p>
+
         <a href="{% url 'listar_livros' %}" class="btn btn-success">Voltar</a>
     </div>
 </main>
+
 
 {% include 'catalogo/reusable/footer.html' %}
 
