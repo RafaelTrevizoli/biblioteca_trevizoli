@@ -1,30 +1,28 @@
-# 📚 Trevizoli Library
+# 📚 Biblioteca Trevizoli
 
-## 📝 Project Description
+## 📝 Descrição do Projeto
 
-**Biblioteca Trevizoli** is a library management system developed in Python with Django. This project aims to facilitate the administration of a library, allowing efficient control of books, authors, editors, genres and users.
+**Biblioteca Trevizoli** é um sistema de gerenciamento de bibliotecas desenvolvido em Python com Django. Este projeto visa facilitar a administração de uma biblioteca, permitindo o controle eficiente de livros, autores, editoras, gêneros e usuários.
 
-## ⚙️ Features
+## ⚙️ Funcionalidades
 
-- **Complete CRUD**:
-  - 📖 **Books**: Add, edit, view and delete books from the library collection.
-  - ✍️ **Authors**: Manage information about authors, including biographies and published works.
-  - 🏢 **Publishers**: Keep records of publishers associated with books.
-  - 📚 **Genres**: Classify books into different literary genres.
-  - 👤 **Users**: Register and manage library users, allowing control of loans and returns.
+- **CRUD Completo**:
+  - 📖 **Livros**: Adicionar, editar, visualizar e excluir livros da coleção da biblioteca.
+  - ✍️ **Autores**: Gerenciar informações sobre autores, incluindo biografias e obras publicadas.
+  - 🏢 **Editoras**: Manter registros das editoras associadas aos livros.
+  - 📚 **Gêneros**: Classificar livros em diferentes gêneros literários.
+  - 👤 **Usuários**: Registrar e gerenciar usuários da biblioteca, permitindo o controle de empréstimos e devoluções.
 
-## 🛠️ Technologies Used
+## 🛠️ Tecnologias Utilizadas
 
 - **Backend**: Python, Django
-- **Database**: MySQL
+- **Banco de Dados**: MySQL
 - **Frontend**: HTML, CSS, Bootstrap
 
-## 📋 Prerequisites
+## 📋 Pré-requisitos
 
-Before running the project, make sure you have the following prerequisites installed on your machine:
+Antes de executar o projeto, certifique-se de que os seguintes pré-requisitos estão instalados em sua máquina:
 
--Python 3.x
+- Python 3.x
 - MySQL
-- Pip (Python package manager)
-
-##
+- Pip (gerenciador de pacotes do Python)
