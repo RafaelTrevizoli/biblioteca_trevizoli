@@ -1,5 +1,5 @@
 -- Inserindo autores
-INSERT INTO autor (nome, biografia) VALUES 
+INSERT INTO autores (nome, biografia) VALUES
 ('J.K. Rowling', 'Autora da série Harry Potter.'),
 ('George R.R. Martin', 'Autor da série As Crônicas de Gelo e Fogo.'),
 ('J.R.R. Tolkien', 'Autor de O Senhor dos Anéis e O Hobbit.'),
@@ -23,7 +23,7 @@ INSERT INTO autor (nome, biografia) VALUES
 ('Malala Yousafzai', 'Ativista e autora de sua autobiografia.');
 
 -- Inserindo editoras
-INSERT INTO editora (nome, endereco) VALUES 
+INSERT INTO editoras (nome, endereco) VALUES
 ('Editora Rocco', 'Rua Rocco, 123, São Paulo, SP'),
 ('Companhia das Letras', 'Avenida Letras, 456, São Paulo, SP'),
 ('Grupo Editorial Record', 'Rua Record, 789, Rio de Janeiro, RJ'),
@@ -46,7 +46,7 @@ INSERT INTO editora (nome, endereco) VALUES
 ('Editora UFMG', 'Avenida UFMG, 234, Belo Horizonte, MG');
 
 -- Inserindo gêneros
-INSERT INTO genero (nome) VALUES 
+INSERT INTO generos (nome) VALUES
 ('Ficção'),
 ('Ficção Científica'),
 ('Fantasia'),
@@ -69,7 +69,7 @@ INSERT INTO genero (nome) VALUES
 ('Non-ficção');
 
 -- Inserindo tags
-INSERT INTO tag (nome) VALUES 
+INSERT INTO tags (nome) VALUES
 ('Melhor Vendido'),
 ('Clássico'),
 ('Recomendado'),
@@ -92,7 +92,7 @@ INSERT INTO tag (nome) VALUES
 ('Literatura Estrangeira');
 
 -- Inserindo livros
-INSERT INTO livro (titulo, descricao, ano_publicacao, autor_id, editora_id, genero_id) VALUES 
+INSERT INTO livros (titulo, descricao, ano_publicacao, autor_id, editora_id, genero_id) VALUES
 ('Harry Potter e a Pedra Filosofal', 'O primeiro livro da série Harry Potter.', 1997, 1, 1, 1),
 ('Guerra dos Tronos', 'O primeiro livro da série As Crônicas de Gelo e Fogo.', 1996, 2, 3, 1),
 ('O Hobbit', 'Uma aventura em uma terra mágica.', 1937, 3, 3, 1),
@@ -113,3 +113,6 @@ INSERT INTO livro (titulo, descricao, ano_publicacao, autor_id, editora_id, gene
 ('I Know Why the Caged Bird Sings', 'Uma autobiografia sobre superação e racismo.', 1969, 18, 1, 1),
 ('O Conto da Aia', 'Uma distopia sobre um futuro totalitário.', 1985, 19, 1, 1),
 ('Slaughterhouse-Five', 'Uma sátira da guerra e do tempo.', 1969, 20, 1, 1);
+
+
+

@@ -1,9 +1,8 @@
 # views.py
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
-from .models import Livro, Autor, Editora, Genero, Tag
+from .models import Livro, LivroView, Autor, Editora, Genero, Tag
 from .forms import LivroForm, AutorForm, EditoraForm, GeneroForm, TagForm
-
 
 # --- Livros --- #
 def listar_livros(request):
@@ -20,7 +19,6 @@ def listar_livros(request):
         livros = Livro.objects.all()
 
     return render(request, 'catalogo/livros/listar_livros.html', {'livros': livros})
-
 
 def listar_livros_crud(request):
     livros = Livro.objects.all()
@@ -80,7 +78,7 @@ def listar_autores(request):
 
 def listar_autores_crud(request):
     autores = Autor.objects.all()
-    return render(request, 'catalogo/autores/listar_autores_crud.html', {'autores': autores})
+    return render(request, 'catalogo/autores/listar_autores_crud.html', {'autores': autores})                           
 
 
 def criar_autor(request):
