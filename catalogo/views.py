@@ -1,12 +1,24 @@
 # views.py
 from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Q
 from .models import Livro, Autor, Editora, Genero, Tag
 from .forms import LivroForm, AutorForm, EditoraForm, GeneroForm, TagForm
 
 
 # --- Livros --- #
 def listar_livros(request):
-    livros = Livro.objects.all()
+    query = request.GET.get('buscar')
+    if query:
+        livros = Livro.objects.filter(
+            Q(titulo__icontains=query) |
+            Q(autor__nome__icontains=query) |
+            Q(editora__nome__icontains=query) |
+            Q(genero__nome__icontains=query) |
+            Q(tags__nome__icontains=query)
+        ).distinct()
+    else:
+        livros = Livro.objects.all()
+
     return render(request, 'catalogo/livros/listar_livros.html', {'livros': livros})
 
 
@@ -54,7 +66,15 @@ def detalhes_livro(request, pk):
 
 # --- Autores --- #
 def listar_autores(request):
-    autores = Autor.objects.all()
+    query = request.GET.get('buscar')
+    if query:
+        autores = Autor.objects.filter(
+            Q(nome__icontains=query) |
+            Q(biografia__icontains=query)
+        ).distinct()
+    else:
+        autores = Autor.objects.all()
+
     return render(request, 'catalogo/autores/listar_autores.html', {'autores': autores})
 
 

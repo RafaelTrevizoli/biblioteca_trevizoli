@@ -12,40 +12,59 @@
 
 <div class="container mt-5">
     <h2 class="mb-4">Lista de Livros Disponíveis</h2>
-    <div class="row">
-        {% for livro in livros %}
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ livro.titulo }}</h5>
-                        <p class="card-text"><strong>Autor:</strong> {{ livro.autor.nome }}</p>
-                        <p class="card-text"><strong>Editora:</strong> {{ livro.editora.nome }}</p>
-                        <p class="card-text"><strong>Gênero:</strong> {{ livro.genero.nome }}</p>
-                        <p class="card-text"><strong>Ano de Publicação:</strong> {{ livro.ano_publicacao }}</p>
-                        <p class="card-text"><strong>Descrição:</strong>
-                            {{ livro.descricao|truncatechars:20 }}{% if livro.descricao|length > 20 %}...{% endif %}</p>
-                    
-                        <p class="card-text"><strong>Tags:</strong>
-                            {% if livro.tags.all %}
-                                {% for tag in livro.tags.all %}
-                                    {{ tag.nome }}{% if not forloop.last %}, {% endif %}
-                                {% endfor %}
-                            {% else %}
-                                Nenhuma tag disponível.
-                            {% endif %}
-                        </p>
 
-                        <div class="d-flex justify-content-between">
-                            <a href="{% url 'detalhes_livro' livro.pk %}" class="btn btn-sm btn-success">
-                                <i class="bi bi-info-circle"></i> Detalhes
-                            </a>
+    <!-- Barra de Pesquisa -->
+    <form method="GET" action="{% url 'listar_livros' %}" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="buscar" class="form-control" placeholder="Pesquise por título, autor, editora, gênero ou tag" value="{{ request.GET.buscar }}">
+            <button class="btn btn-primary" type="submit">
+                <i class="bi bi-search"></i> Pesquisar
+            </button>
+        </div>
+    </form>
+
+    <div class="row">
+        {% if livros %}
+            {% for livro in livros %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ livro.titulo }}</h5>
+                            <p class="card-text"><strong>Autor:</strong> {{ livro.autor.nome }}</p>
+                            <p class="card-text"><strong>Editora:</strong> {{ livro.editora.nome }}</p>
+                            <p class="card-text"><strong>Gênero:</strong> {{ livro.genero.nome }}</p>
+                            <p class="card-text"><strong>Ano de Publicação:</strong> {{ livro.ano_publicacao }}</p>
+                            <p class="card-text"><strong>Descrição:</strong>
+                                {{ livro.descricao|truncatechars:20 }}{% if livro.descricao|length > 20 %}...{% endif %}
+                            </p>
+
+                            <p class="card-text"><strong>Tags:</strong>
+                                {% if livro.tags.all %}
+                                    {% for tag in livro.tags.all %}
+                                        {{ tag.nome }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    Nenhuma tag disponível.
+                                {% endif %}
+                            </p>
+
+                            <div class="d-flex justify-content-between">
+                                <a href="{% url 'detalhes_livro' livro.pk %}" class="btn btn-sm btn-success">
+                                    <i class="bi bi-info-circle"></i> Detalhes
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <p class="text-center">Nenhum livro encontrado para sua pesquisa.</p>
             </div>
-        {% endfor %}
+        {% endif %}
     </div>
 </div>
+
 
 {% include 'catalogo/reusable/footer.html' %}
 </body>

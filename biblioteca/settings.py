@@ -56,7 +56,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
-        'APP_DIRS': True,
+        'APP_DIRS': True,  # Isso permite que o Django busque templates nas pastas "templates" dos apps
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',

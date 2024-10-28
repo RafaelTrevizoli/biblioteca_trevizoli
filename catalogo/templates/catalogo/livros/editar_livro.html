@@ -77,14 +77,14 @@
 
         <div class="form-floating mb-3">
             <select class="form-select" id="floatingTag" name="tags">
-                <option value="">Selecione a Tag</option>
                 {% for tag in form.tags.field.queryset %}
                     <option value="{{ tag.id }}"
-                            {% if tag.id|stringformat:"s" == form.tags.value|stringformat:"s" %}selected{% endif %}>{{ tag.nome }}</option>
+                            {% if tag.id in form.tags.value %}selected{% endif %}>{{ tag.nome }}</option>
                 {% endfor %}
             </select>
             <label for="floatingTag">Tag</label>
         </div>
+
 
         <button type="submit" class="btn btn-success mt-3">Salvar</button>
         <a href="{% url 'listar_livros_crud' %}" class="btn btn-secondary mt-3">Voltar</a>

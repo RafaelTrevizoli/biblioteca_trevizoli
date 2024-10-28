@@ -13,7 +13,7 @@
             height: 800px;
         }
     </style>
-    
+
     {% include 'catalogo/reusable/header.html' %}
 
     <main class="container mt-5">
@@ -25,7 +25,7 @@
                     value="{{ form.nome.value|default:'' }}">
                 <label for="floatingName">Nome do Gênero</label>
             </div>
-            
+
             <button type="submit" class="btn btn-success mt-3">Salvar</button>
             <a href="{% url 'listar_generos_crud' %}" class="btn btn-secondary mt-3">Voltar</a>
         </form>
