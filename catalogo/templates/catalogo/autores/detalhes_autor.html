@@ -6,25 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ autor.nome }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
 
-    <style>
-        main {
-            height: 800px;
-        }
-    </style>
+{% include 'catalogo/reusable/header.html' %}
 
-    {% include 'catalogo/reusable/header.html' %}
+<main class="container mt-5">
+    <h2>{{ autor.nome }}</h2>
+    <p><strong>Biografia:</strong> {{ autor.biografia }}</p>
+    <a href="{% url 'listar_autores' %}" class="btn btn-success">Voltar</a>
+</main>
 
-    <main class="container mt-5">
-        <h2>{{ autor.nome }}</h2>
-        <p><strong>Biografia:</strong> {{ autor.biografia }}</p>
-        <a href="{% url 'listar_autores' %}" class="btn btn-success">Voltar</a>
-    </main>
-
-    {% include 'catalogo/reusable/footer.html' %}
+{% include 'catalogo/reusable/footer.html' %}
 
 </body>
 
