@@ -18,11 +18,11 @@
         <div class="input-group">
             <input type="text" name="buscar" class="form-control"
                    placeholder="Pesquise por título, autor, editora, gênero ou tag" value="{{ request.GET.buscar }}">
-        
+
             {% if request.GET.buscar %}
                 <a href="{% url 'listar_livros' %}" class="btn btn-secondary">Voltar</a>
             {% endif %}
-        
+
             <button class="btn btn-primary" type="submit">
                 <i class="bi bi-search"></i> Pesquisar
             </button>

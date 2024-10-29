@@ -53,18 +53,3 @@ class Livro(models.Model):
 
     def __str__(self):
         return self.titulo
-
-class LivroView(models.Model):
-    id = models.IntegerField(primary_key=True)
-    livro_titulo = models.CharField(max_length=255)
-    autor_nome = models.CharField(max_length=255)
-    editora_nome = models.CharField(max_length=255)
-    genero_nome = models.CharField(max_length=255)
-    tags_nomes = models.TextField()
-
-    class Meta:
-        managed = False
-        db_table = 'livros_view'
-
-    def __str__(self):
-        return self.livro_titulo

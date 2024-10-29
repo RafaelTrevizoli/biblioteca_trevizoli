@@ -1,7 +1,7 @@
 # views.py
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
-from .models import Livro, LivroView, Autor, Editora, Genero, Tag
+from .models import Livro, Autor, Editora, Genero, Tag
 from .forms import LivroForm, AutorForm, EditoraForm, GeneroForm, TagForm
 
 # --- Livros --- #
@@ -67,8 +67,8 @@ def listar_autores(request):
     query = request.GET.get('buscar')
     if query:
         autores = Autor.objects.filter(
-            Q(nome__icontains=query) |
-            Q(biografia__icontains=query)
+            Q(autor_nome__icontains=query) |
+            Q(autor_biografia__icontains=query)
         ).distinct()
     else:
         autores = Autor.objects.all()

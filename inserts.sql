@@ -91,7 +91,7 @@ INSERT INTO tags (nome) VALUES
 ('Misticismo'),
 ('Literatura Estrangeira');
 
--- Inserindo livros
+-- Inserindo livros com tags
 INSERT INTO livros (titulo, descricao, ano_publicacao, autor_id, editora_id, genero_id) VALUES
 ('Harry Potter e a Pedra Filosofal', 'O primeiro livro da série Harry Potter.', 1997, 1, 1, 1),
 ('Guerra dos Tronos', 'O primeiro livro da série As Crônicas de Gelo e Fogo.', 1996, 2, 3, 1),
@@ -114,5 +114,29 @@ INSERT INTO livros (titulo, descricao, ano_publicacao, autor_id, editora_id, gen
 ('O Conto da Aia', 'Uma distopia sobre um futuro totalitário.', 1985, 19, 1, 1),
 ('Slaughterhouse-Five', 'Uma sátira da guerra e do tempo.', 1969, 20, 1, 1);
 
-
-
+-- Inserindo associações de livros e tags
+INSERT INTO livros_tags (livro_id, tag_id) VALUES
+(1, 1), -- Harry Potter e a Pedra Filosofal - Melhor Vendido
+(1, 3), -- Harry Potter e a Pedra Filosofal - Recomendado
+(2, 1), -- Guerra dos Tronos - Melhor Vendido
+(2, 6), -- Guerra dos Tronos - Aventura Épica
+(3, 1), -- O Hobbit - Melhor Vendido
+(4, 2), -- Assassinato no Expresso do Oriente - Clássico
+(4, 11), -- Assassinato no Expresso do Oriente - Não Ficção
+(5, 1), -- It: A Coisa - Melhor Vendido
+(5, 10), -- It: A Coisa - Jovens Adultos
+(6, 2), -- Fundação - Clássico
+(7, 1), -- As Aventuras de Tom Sawyer - Melhor Vendido
+(8, 1), -- Moby Dick - Melhor Vendido
+(9, 1), -- O Grande Gatsby - Melhor Vendido
+(10, 1), -- Orgulho e Preconceito - Melhor Vendido
+(11, 1), -- David Copperfield - Melhor Vendido
+(12, 2), -- O Velho e o Mar - Clássico
+(13, 1), -- Mrs. Dalloway - Melhor Vendido
+(14, 6), -- Fahrenheit 451 - Aventura Épica
+(15, 5), -- O Sol é Para Todos - Feminismo
+(16, 2), -- Guerra e Paz - Clássico
+(17, 6), -- Cem Anos de Solidão - Aventura Épica
+(18, 1), -- I Know Why the Caged Bird Sings - Melhor Vendido
+(19, 1), -- O Conto da Aia - Melhor Vendido
+(20, 11); -- Slaughterhouse-Five - Não Ficção
