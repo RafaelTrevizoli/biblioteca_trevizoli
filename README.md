@@ -11,7 +11,7 @@
   - ✍️ **Autores**: Gerenciar informações sobre autores, incluindo biografias e obras publicadas.
   - 🏢 **Editoras**: Manter registros das editoras associadas aos livros.
   - 📚 **Gêneros**: Classificar livros em diferentes gêneros literários.
-  - 👤 **Usuários**: Registrar e gerenciar usuários da biblioteca, permitindo o controle de empréstimos e devoluções.
+  - 🎲 **Tags**: Gerenciar tags para associar aos livros.
 
 ## 🛠️ Tecnologias Utilizadas
 
