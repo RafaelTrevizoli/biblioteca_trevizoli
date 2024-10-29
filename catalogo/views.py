@@ -20,6 +20,7 @@ def listar_livros(request):
 
     return render(request, 'catalogo/livros/listar_livros.html', {'livros': livros})
 
+
 def listar_livros_crud(request):
     livros = Livro.objects.all()
     return render(request, 'catalogo/livros/listar_livros_crud.html', {'livros': livros})
@@ -67,8 +68,8 @@ def listar_autores(request):
     query = request.GET.get('buscar')
     if query:
         autores = Autor.objects.filter(
-            Q(autor_nome__icontains=query) |
-            Q(autor_biografia__icontains=query)
+            Q(nome__icontains=query) |
+            Q(biografia__icontains=query)
         ).distinct()
     else:
         autores = Autor.objects.all()
