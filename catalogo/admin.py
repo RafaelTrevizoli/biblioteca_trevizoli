@@ -1,6 +1,6 @@
 # admin.py
 from django.contrib import admin
-from .models import Autor, Livro, Editora, Genero
+from .models import Autor, Livro, Editora, Genero,Tag
 
 @admin.register(Autor)
 class AutorAdmin(admin.ModelAdmin):
@@ -14,6 +14,11 @@ class EditoraAdmin(admin.ModelAdmin):
 
 @admin.register(Genero)
 class GeneroAdmin(admin.ModelAdmin):
+    list_display = ('id', 'nome')
+    search_fields = ('nome',)
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
     list_display = ('id', 'nome')
     search_fields = ('nome',)
 
