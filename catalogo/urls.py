@@ -7,6 +7,8 @@ urlpatterns = [
     # --- Admin --- #
     path('admin/', admin.site.urls),
 
+    # --- Página de erro --- #
+
     path('pagina_de_erro/', views.pagina_de_erro, name='pagina_de_erro'),
 
     # --- Pasta Raiz --- #

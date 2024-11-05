@@ -271,11 +271,14 @@ def detalhes_tag(request, pk):
     return render(request, 'catalogo/tags/detalhes_tag.html', {'tag': tag})
 
 
-def pagina_de_erro(request):
-    return render(request, 'catalogo/reusable/erro.html')
+# --- User --- #
 
-
-@login_required  # Garante que apenas usuários logados possam acessar esta view
+@login_required
 def informacoes_usuario(request):
-    user = request.user  # Obtém o usuário logado
-    return render(request, 'informacoes_usuario.html', {'user': user})
+    user = request.user
+    return render(request, 'contas/informacoes_usuario.html', {'user': user})
+
+
+# --- Página de erro --- #
+def pagina_de_erro(request):
+    return render(request, 'reusable/pag_erro.html')
