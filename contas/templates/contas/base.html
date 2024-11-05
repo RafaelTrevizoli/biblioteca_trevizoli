@@ -1,4 +1,3 @@
-<!-- accounts/templates/accounts/base.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,11 +5,11 @@
     <title>{% block title %}Meu Projeto{% endblock %}</title>
 </head>
 <body>
-    <nav>
-        <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'register' %}">Register</a>
-        <a href="{% url 'logout' %}">Logout</a>
-    </nav>
-    {% block content %}{% endblock %}
+<nav>
+    <a href="{% url 'login' %}">Login</a>
+    <a href="{% url 'register' %}">Register</a>
+    <a href="{% url 'logout' %}">Logout</a>
+</nav>
+{% block content %}{% endblock %}
 </body>
 </html>

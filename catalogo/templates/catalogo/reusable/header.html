@@ -1,31 +1,54 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
 <header class="bg-dark text-white py-3">
     <div class="container">
         <h1>Biblioteca Trevizoli</h1>
         <nav>
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'listar_livros' %}">Listar Livros</a>
+                    <a class="nav-link text-white" href="{% url 'listar_livros' %}">
+                        <i class="fas fa-book"></i> Listar Livros
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'listar_autores' %}">Listar Autores</a>
+                    <a class="nav-link text-white" href="{% url 'listar_autores' %}">
+                        <i class="fas fa-user"></i> Listar Autores
+                    </a>
                 </li>
                 {% if user.is_staff %}
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'listar_generos_crud' %}">Gêneros - CRUD</a>
+                        <a class="nav-link text-white" href="{% url 'listar_generos_crud' %}">
+                            <i class="fas fa-tags"></i> Gêneros - CRUD
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'listar_editoras_crud' %}">Editoras - CRUD</a>
+                        <a class="nav-link text-white" href="{% url 'listar_editoras_crud' %}">
+                            <i class="fas fa-building"></i> Editoras - CRUD
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'listar_livros_crud' %}">Livros - CRUD</a>
+                        <a class="nav-link text-white" href="{% url 'listar_livros_crud' %}">
+                            <i class="fas fa-book-open"></i> Livros - CRUD
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'listar_autores_crud' %}">Autores - CRUD</a>
+                        <a class="nav-link text-white" href="{% url 'listar_autores_crud' %}">
+                            <i class="fas fa-user-edit"></i> Autores - CRUD
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'listar_tags_crud' %}">Tags - CRUD</a>
+                        <a class="nav-link text-white" href="{% url 'listar_tags_crud' %}">
+                            <i class="fas fa-tag"></i> Tags - CRUD
+                        </a>
                     </li>
                 {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'verifica_usuario' %}">
+                        <i class="fas fa-user-circle"></i> Minhas Informações
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from .models import Livro, Autor, Editora, Genero, Tag
 from .forms import LivroForm, AutorForm, EditoraForm, GeneroForm, TagForm
 
+
 # --- Livros --- #
 def listar_livros(request):
     query = request.GET.get('buscar')
@@ -85,8 +86,7 @@ def listar_autores(request):
 @permission_required('', login_url='pagina_de_erro')
 def listar_autores_crud(request):
     autores = Autor.objects.all()
-    return render(request, 'catalogo/autores/listar_autores_crud.html', {'autores': autores})                           
-
+    return render(request, 'catalogo/autores/listar_autores_crud.html', {'autores': autores})
 
 
 @permission_required('', login_url='pagina_de_erro')
@@ -146,7 +146,6 @@ def criar_editora(request):
     else:
         form = EditoraForm()
     return render(request, 'catalogo/editoras/criar_editora.html', {'form': form})
-
 
 
 @permission_required('', login_url='pagina_de_erro')
@@ -275,3 +274,9 @@ def detalhes_tag(request, pk):
 
 def pagina_de_erro(request):
     return render(request, 'catalogo/reusable/erro.html')
+
+
+@login_required  # Garante que apenas usuários logados possam acessar esta view
+def informacoes_usuario(request):
+    user = request.user  # Obtém o usuário logado
+    return render(request, 'informacoes_usuario.html', {'user': user})
