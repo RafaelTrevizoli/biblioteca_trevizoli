@@ -1,4 +1,3 @@
-# urls.py
 from django.urls import path
 from django.contrib import admin
 from . import views
@@ -7,6 +6,10 @@ urlpatterns = [
 
     # --- Admin --- #
     path('admin/', admin.site.urls),
+
+    # --- Página de erro --- #
+
+    path('pagina_de_erro/', views.pagina_de_erro, name='pagina_de_erro'),
 
     # --- Pasta Raiz --- #
     path('', views.listar_livros, name='listar_livros'),
