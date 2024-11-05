@@ -8,6 +8,8 @@ urlpatterns = [
     # --- Admin --- #
     path('admin/', admin.site.urls),
 
+    path('pagina_de_erro/', views.pagina_de_erro, name='pagina_de_erro'),
+
     # --- Pasta Raiz --- #
     path('', views.listar_livros, name='listar_livros'),
 
