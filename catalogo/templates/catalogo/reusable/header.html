@@ -44,11 +44,21 @@
                         </a>
                     </li>
                 {% endif %}
+            
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{% url 'verifica_usuario' %}">
-                        <i class="fas fa-user-circle"></i> Minhas Informações
+                        <i class="fas fa-user-circle"></i> Perfil
                     </a>
                 </li>
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'logout' %}">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </a>
+                    </li>
+                {% endif %}
+
             </ul>
         </nav>
     </div>
