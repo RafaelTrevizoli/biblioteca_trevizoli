@@ -11,54 +11,69 @@
 
 {% include 'reusable/header.html' %}
 
-<header>
-    <h1>Meus Empréstimos</h1>
+<header class="bg-dark text-white py-4">
+    <div class="container text-center">
+        <h1 class="mb-0">Meus Empréstimos</h1>
+    </div>
 </header>
 
 <main>
-    {% if emprestimos %}
-        <table>
-            <thead>
-            <tr>
-                <th>Título do Livro</th>
-                <th>Autor</th>
-                <th>Data de Empréstimo</th>
-                <th>Data de Devolução</th>
-                <th>Status</th>
-                <th>Ação</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for emprestimo in emprestimos %}
-                <tr>
-                    <td>{{ emprestimo.livro.titulo }}</td>
-                    <td>{{ emprestimo.livro.autor.nome }}</td>
-                    <td>{{ emprestimo.data_emprestimo|date:"d/m/Y" }}</td>
-                    <td>
-                        {% if emprestimo.data_devolucao %}
-                            {{ emprestimo.data_devolucao|date:"d/m/Y" }}
-                        {% else %}
-                            Não definido
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if emprestimo.devolvido %}
-                            Devolvido
-                        {% else %}
-                            Em andamento
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a href="{% url 'visualizar_livro' emprestimo.livro.id %}">Ler</a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>Você ainda não possui empréstimos de livros.</p>
-    {% endif %}
-
+    <div class="container my-5">
+        {% if emprestimos %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Título do Livro</th>
+                        <th scope="col">Autor</th>
+                        <th scope="col">Data de Empréstimo</th>
+                        <th scope="col">Data de Devolução</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Ação</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for emprestimo in emprestimos %}
+                        <tr>
+                            <td>{{ emprestimo.livro.titulo }}</td>
+                            <td>{{ emprestimo.livro.autor.nome }}</td>
+                            <td>{{ emprestimo.data_emprestimo|date:"d/m/Y" }}</td>
+                            <td>
+                                {% if emprestimo.data_devolucao %}
+                                    {{ emprestimo.data_devolucao|date:"d/m/Y" }}
+                                {% else %}
+                                    <span class="text-muted">Não definido</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if emprestimo.devolvido %}
+                                    <span class="badge bg-success">Devolvido</span>
+                                {% else %}
+                                    <span class="badge bg-warning text-dark">Em andamento</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'visualizar_livro' emprestimo.livro.id %}"
+                                   class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-book"></i> Ler
+                                </a>
+                                <a href="#"
+                                   class="btn btn-outline-danger btn-sm">
+                                    <i class="bi bi-x-circle"></i> Remover
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center" role="alert">
+                Você ainda não possui empréstimos de livros.
+            </div>
+        {% endif %}
+    </div>
 </main>
+
 </body>
 </html>

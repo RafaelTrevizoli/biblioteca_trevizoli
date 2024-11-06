@@ -10,33 +10,46 @@
 <body>
 
 {% include 'reusable/header.html' %}
-<header>
-    <h1>{{ livro.titulo }}</h1>
-    <p><strong>Autor:</strong> {{ livro.autor.nome }}</p>
-    <p><strong>Editora:</strong> {{ livro.editora.nome }}</p>
-    <p><strong>Ano de Publicação:</strong> {{ livro.ano_publicacao }}</p>
-    <p><strong>Gênero:</strong> {{ livro.genero.nome }}</p>
+
+<header class="bg-dark text-white py-4">
+    <div class="container">
+        <h1 class="display-5">{{ livro.titulo }}</h1>
+        <p><strong>Autor:</strong> {{ livro.autor.nome }}</p>
+        <p><strong>Editora:</strong> {{ livro.editora.nome }}</p>
+        <p><strong>Ano de Publicação:</strong> {{ livro.ano_publicacao }}</p>
+        <p><strong>Gênero:</strong> {{ livro.genero.nome }}</p>
+    </div>
 </header>
 
-<main>
-    <section>
-        <h2>Descrição</h2>
+<main class="container my-5">
+    <section class="mb-4">
+        <h2 class="h4">Descrição</h2>
         <p>{{ livro.descricao }}</p>
     </section>
 
     <section>
-        <h2>Tags</h2>
-        <ul>
-            {% for tag in livro.tags.all %}
-                <li>{{ tag.nome }}</li>
-            {% endfor %}
-        </ul>
+        <h2 class="h4">Tags</h2>
+        {% if livro.tags.all %}
+            <ul class="list-inline">
+                {% for tag in livro.tags.all %}
+                    <li class="list-inline-item">
+                        <span class="badge bg-primary">{{ tag.nome }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">Nenhuma tag disponível.</p>
+        {% endif %}
     </section>
+
+    <div class="mt-5">
+        <a href="{% url 'meus_emprestimos' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Voltar para Meus Empréstimos
+        </a>
+    </div>
 </main>
 
-<footer>
-    <p>&copy; Biblioteca Online</p>
-    <a href="{% url 'meus_emprestimos' %}">Voltar para Meus Empréstimos</a>
-</footer>
+{% include 'reusable/footer.html' %}
+
 </body>
 </html>
