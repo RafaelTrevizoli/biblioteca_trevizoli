@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Empréstimos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+</head>
+<body>
+
+{% include 'reusable/header.html' %}
+
+<header>
+    <h1>Meus Empréstimos</h1>
+</header>
+
+<main>
+    {% if emprestimos %}
+        <table>
+            <thead>
+            <tr>
+                <th>Título do Livro</th>
+                <th>Autor</th>
+                <th>Data de Empréstimo</th>
+                <th>Data de Devolução</th>
+                <th>Status</th>
+                <th>Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for emprestimo in emprestimos %}
+                <tr>
+                    <td>{{ emprestimo.livro.titulo }}</td>
+                    <td>{{ emprestimo.livro.autor.nome }}</td>
+                    <td>{{ emprestimo.data_emprestimo|date:"d/m/Y" }}</td>
+                    <td>
+                        {% if emprestimo.data_devolucao %}
+                            {{ emprestimo.data_devolucao|date:"d/m/Y" }}
+                        {% else %}
+                            Não definido
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if emprestimo.devolvido %}
+                            Devolvido
+                        {% else %}
+                            Em andamento
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'visualizar_livro' emprestimo.livro.id %}">Ler</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Você ainda não possui empréstimos de livros.</p>
+    {% endif %}
+
+</main>
+</body>
+</html>

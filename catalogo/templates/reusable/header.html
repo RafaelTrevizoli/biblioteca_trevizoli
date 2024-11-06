@@ -53,12 +53,19 @@
 
                 {% if user.is_authenticated %}
                     <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'meus_emprestimos' %}">
+                            <i class="bi bi-book"></i> Meus livros
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
                         <a class="nav-link text-white" href="{% url 'logout' %}">
                             <i class="fas fa-sign-out-alt"></i> Sair
                         </a>
                     </li>
                 {% endif %}
-
             </ul>
         </nav>
     </div>

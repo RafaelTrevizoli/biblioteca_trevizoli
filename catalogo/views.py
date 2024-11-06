@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required, permission_required
-from .models import Livro, Autor, Editora, Genero, Tag
+from .models import Livro, Autor, Editora, Genero, Tag, Emprestimo
 from .forms import LivroForm, AutorForm, EditoraForm, GeneroForm, TagForm
 
 
@@ -282,3 +282,28 @@ def informacoes_usuario(request):
 # --- Página de erro --- #
 def pagina_de_erro(request):
     return render(request, 'reusable/pag_erro.html')
+
+
+def meus_emprestimos(request):
+    emprestimos = Emprestimo.objects.filter(usuario=request.user, devolvido=False)
+    return render(request, 'catalogo/emprestimo/meus_emprestimos.html', {'emprestimos': emprestimos})
+
+
+def visualizar_livro(request, livro_id):
+    livro = get_object_or_404(Livro, id=livro_id)
+    emprestimo = Emprestimo.objects.filter(usuario=request.user, livro=livro, devolvido=False).first()
+
+    if emprestimo:
+        return render(request, 'catalogo/emprestimo/visualizar_livro.html', {'livro': livro})
+    else:
+        return render(request, '', {'mensagem': 'Você não tem acesso a este livro.'})
+
+
+@login_required
+def obter_livro(request, livro_id):
+    livro = get_object_or_404(Livro, id=livro_id)
+    # Verifica se o usuário já tem o livro emprestado
+    if not Emprestimo.objects.filter(usuario=request.user, livro=livro, devolvido=False).exists():
+        # Cria um novo registro de empréstimo
+        Emprestimo.objects.create(usuario=request.user, livro=livro)
+    return redirect('meus_emprestimos')

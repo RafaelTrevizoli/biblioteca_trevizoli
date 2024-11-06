@@ -14,6 +14,13 @@ urlpatterns = [
     # --- Pasta Raiz --- #
     path('', views.listar_livros, name='listar_livros'),
 
+    # --- Emprestimos --- #
+
+    path('meus-emprestimos/', views.meus_emprestimos, name='meus_emprestimos'),
+    path('livro/<int:livro_id>/', views.visualizar_livro, name='visualizar_livro'),
+    path('livro/<int:livro_id>/', views.detalhes_livro, name='detalhes_livro'),
+    path('livro/<int:livro_id>/obter/', views.obter_livro, name='obter_livro'),  # Nova rota
+
     # --- Livros --- #
     path('livros/', views.listar_livros, name='listar_livros'),
     path('livros/tela/', views.listar_livros_crud, name='listar_livros_crud'),

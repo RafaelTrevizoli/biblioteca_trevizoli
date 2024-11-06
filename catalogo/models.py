@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from datetime import datetime, timedelta
 
 class Autor(models.Model):
     nome = models.CharField(max_length=100)
@@ -52,3 +54,22 @@ class Livro(models.Model):
 
     def __str__(self):
         return self.titulo
+
+class Emprestimo(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    livro = models.ForeignKey(Livro, on_delete=models.CASCADE)
+    data_emprestimo = models.DateTimeField(auto_now_add=True)
+    data_devolucao = models.DateTimeField(null=True, blank=True)
+    devolvido = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = 'emprestimos'
+
+    def __str__(self):
+        return f"{self.usuario.username} - {self.livro.titulo}"
+
+    def calcular_data_devolucao(self):
+        """Calcula a data de devolução padrão como 30 dias a partir da data de empréstimo."""
+        if not self.data_devolucao:
+            self.data_devolucao = self.data_emprestimo + timedelta(days=30)
+            self.save()
