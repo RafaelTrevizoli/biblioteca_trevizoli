@@ -17,7 +17,7 @@
 
 - **Backend**: Python, Django
 - **Banco de Dados**: MySQL
-- **Frontend**: HTML, CSS, Bootstrap
+- **Frontend**: HTML, CSS, Bootstrap, Notyf
 
 ## 📋 Pré-requisitos
 

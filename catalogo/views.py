@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib import messages
 from .models import Livro, Autor, Editora, Genero, Tag, Emprestimo
 from .forms import LivroForm, AutorForm, EditoraForm, GeneroForm, TagForm
 
@@ -34,6 +35,7 @@ def criar_livro(request):
         form = LivroForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Livro adicionado com sucesso!')
             return redirect('listar_livros_crud')
     else:
         form = LivroForm()
@@ -48,6 +50,7 @@ def editar_livro(request, pk):
         form = LivroForm(request.POST, instance=livro)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Livro editado com sucesso!')
             return redirect('listar_livros_crud')
     else:
         form = LivroForm(instance=livro)
@@ -59,6 +62,7 @@ def deletar_livro(request, pk):
     livro = get_object_or_404(Livro, pk=pk)
     if request.method == 'POST':
         livro.delete()
+        messages.success(request, 'Livro excluído com sucesso!')
         return redirect('listar_livros_crud')
     return render(request, 'catalogo/livros/deletar_livro.html', {'livro': livro})
 
@@ -94,6 +98,7 @@ def criar_autor(request):
         form = AutorForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Autor adicionado com sucesso!')
             return redirect('listar_autores_crud')
     else:
         form = AutorForm()
@@ -107,6 +112,7 @@ def editar_autor(request, pk):
         form = AutorForm(request.POST, instance=autor)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Autor editado com sucesso!')
             return redirect('listar_autores_crud')
     else:
         form = AutorForm(instance=autor)
@@ -118,6 +124,7 @@ def deletar_autor(request, pk):
     autor = get_object_or_404(Autor, pk=pk)
     if request.method == 'POST':
         autor.delete()
+        messages.success(request, 'Autor deletado com sucesso!')
         return redirect('listar_autores_crud')
     return render(request, 'catalogo/autores/deletar_autor.html', {'autor': autor})
 
@@ -141,6 +148,7 @@ def criar_editora(request):
         form = EditoraForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Editora adicionada com sucesso!')
             return redirect('listar_editoras_crud')
     else:
         form = EditoraForm()
@@ -154,6 +162,7 @@ def editar_editora(request, pk):
         form = EditoraForm(request.POST, instance=editora)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Editora editada com sucesso!')
             return redirect('listar_editoras_crud')
     else:
         form = EditoraForm(instance=editora)
@@ -165,6 +174,7 @@ def deletar_editora(request, pk):
     editora = get_object_or_404(Editora, pk=pk)
     if request.method == 'POST':
         editora.delete()
+        messages.success(request, 'Editora deletada com sucesso!')
         return redirect('listar_editoras_crud')
     return render(request, 'catalogo/editoras/deletar_editora.html', {'editora': editora})
 
@@ -189,6 +199,7 @@ def criar_genero(request):
         form = GeneroForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Gênero adicionado com sucesso!')
             return redirect('listar_generos_crud')
     else:
         form = GeneroForm()
@@ -202,6 +213,7 @@ def editar_genero(request, pk):
         form = GeneroForm(request.POST, instance=genero)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Gênero editado com sucesso!')
             return redirect('listar_generos_crud')
     else:
         form = GeneroForm(instance=genero)
@@ -213,6 +225,7 @@ def deletar_genero(request, pk):
     genero = get_object_or_404(Genero, pk=pk)
     if request.method == 'POST':
         genero.delete()
+        messages.success(request, 'Gênero deletado com sucesso!')
         return redirect('listar_generos_crud')
     return render(request, 'catalogo/generos/deletar_genero.html', {'genero': genero})
 
@@ -237,6 +250,7 @@ def criar_tag(request):
         form = TagForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Tag adicionada com sucesso!')
             return redirect('listar_tags_crud')
     else:
         form = TagForm()
@@ -250,6 +264,7 @@ def editar_tag(request, pk):
         form = TagForm(request.POST, instance=tag)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Tag editada com sucesso!')
             return redirect('listar_tags_crud')
     else:
         form = TagForm(instance=tag)
@@ -261,6 +276,7 @@ def deletar_tag(request, pk):
     tag = get_object_or_404(Tag, pk=pk)
     if request.method == 'POST':
         tag.delete()
+        messages.success(request, 'Tag deletada com sucesso!')
         return redirect('listar_tags_crud')
     return render(request, 'catalogo/tags/deletar_tag.html', {'tag': tag})
 
@@ -302,8 +318,15 @@ def visualizar_livro(request, livro_id):
 @login_required
 def obter_livro(request, livro_id):
     livro = get_object_or_404(Livro, id=livro_id)
-    # Verifica se o usuário já tem o livro emprestado
+
     if not Emprestimo.objects.filter(usuario=request.user, livro=livro, devolvido=False).exists():
-        # Cria um novo registro de empréstimo
         Emprestimo.objects.create(usuario=request.user, livro=livro)
-    return redirect('meus_emprestimos')
+
+        messages.info(request, 'Livro adicionado a sua conta!')
+
+        return redirect('meus_emprestimos')
+
+    else:
+        messages.error(request, 'Este livro já foi adicionado a sua conta!')
+
+        return redirect(request.META.get('HTTP_REFERER'))  # --- Redireciona de volta para a página anterior --- #

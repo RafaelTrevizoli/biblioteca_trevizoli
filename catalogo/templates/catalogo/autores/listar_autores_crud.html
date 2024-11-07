@@ -10,55 +10,57 @@
 </head>
 
 <body>
-    {% include 'reusable/header.html' %}
+{% include 'reusable/header.html' %}
 
-    <div class="container mt-5">
-        <h2 class="mb-4">Gerenciar Autores</h2>
-        <a href="{% url 'criar_autor' %}" class="btn btn-primary mb-3">
-            <i class="bi bi-plus-circle"></i> Adicionar Autor
-        </a>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Biografia</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for autor in autores %}
-                <tr>
-                    <td>{{ autor.id }}</td>
-                    <td>{{ autor.nome }}</td>
-                    <td>
-                        {{ autor.biografia|truncatechars:100 }}
-                        {% if autor.biografia|length > 100 %}
-                            ...
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a href="{% url 'detalhes_autor' autor.pk %}" class="btn btn-info btn-sm" title="Detalhes">
-                            <i class="bi bi-info-circle"></i> Detalhes
-                        </a>
-                        <a href="{% url 'editar_autor' autor.pk %}" class="btn btn-warning btn-sm" title="Editar">
-                            <i class="bi bi-pencil-square"></i> Editar
-                        </a>
-                        <a href="{% url 'deletar_autor' autor.pk %}" class="btn btn-danger btn-sm" title="Deletar">
-                            <i class="bi bi-trash"></i> Deletar
-                        </a>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="4" class="text-center">Nenhum autor encontrado.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+<div class="container mt-5">
+    <h2 class="mb-4">Gerenciar Autores</h2>
+    <a href="{% url 'criar_autor' %}" class="btn btn-primary mb-3">
+        <i class="bi bi-plus-circle"></i> Adicionar Autor
+    </a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Biografia</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for autor in autores %}
+            <tr>
+                <td>{{ autor.id }}</td>
+                <td>{{ autor.nome }}</td>
+                <td>
+                    {{ autor.biografia|truncatechars:100 }}
+                    {% if autor.biografia|length > 100 %}
+                        ...
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'detalhes_autor' autor.pk %}" class="btn btn-info btn-sm" title="Detalhes">
+                        <i class="bi bi-info-circle"></i> Detalhes
+                    </a>
+                    <a href="{% url 'editar_autor' autor.pk %}" class="btn btn-warning btn-sm" title="Editar">
+                        <i class="bi bi-pencil-square"></i> Editar
+                    </a>
+                    <a href="{% url 'deletar_autor' autor.pk %}" class="btn btn-danger btn-sm" title="Deletar">
+                        <i class="bi bi-trash"></i> Deletar
+                    </a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">Nenhum autor encontrado.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 
-    {% include 'reusable/footer.html' %}
+{% include 'reusable/notificacoes.html' %}
+    
+{% include 'reusable/footer.html' %}
 
 </body>
 

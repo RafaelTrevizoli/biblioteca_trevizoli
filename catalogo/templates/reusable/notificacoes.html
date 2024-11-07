@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const notyf = new Notyf({
+            duration: 3000,
+            position: {x: 'right', y: 'top'},
+            dismissible: true,
+            types: [
+                {type: 'success', background: 'green'},
+                {type: 'error', background: 'red'},
+                {type: 'info', background: 'blue'}
+            ]
+        });
+
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == 'success' %}
+                    notyf.success("{{ message }}");
+                {% elif message.tags == 'error' %}
+                    notyf.error("{{ message }}");
+                {% elif message.tags == 'info' %}
+                    notyf.open({type: 'info', message: "{{ message }}"});
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    });
+</script>
