@@ -167,3 +167,16 @@ input:-webkit-autofill {
     padding: 0 5px;
 }
 
+.erro-mensagem {
+    color: #ff4d4d; /* Cor vermelha suave */
+    background-color: #ffe6e6; /* Fundo vermelho claro */
+    border: 1px solid #ffcccc;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 0.9em;
+    margin-top: 5px;
+    text-align: left;
+    width: fit-content;
+    display: block;
+}
+

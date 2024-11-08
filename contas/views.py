@@ -4,14 +4,21 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from .forms import CustomUserCreationForm
+from .forms import UserCreationForm
 
 
 # --- Registro --- #
 class RegisterView(CreateView):
-    form_class = CustomUserCreationForm
+    form_class = UserCreationForm
     template_name = 'contas/register.html'
     success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        # --- Chama o metodo pai para salvar o formulário e criar o usuario --- #
+        response = super().form_valid(form)
+        messages.success(self.request, 'Cadastro realizado com sucesso! Faça login para acessar sua conta.')
+        return response
+
 
 # --- Login --- #
 def login_view(request):
@@ -27,17 +34,20 @@ def login_view(request):
             messages.error(request, 'Nome de usuário ou senha inválidos.')
     return render(request, 'contas/login.html')
 
+
 # --- Logout --- #
 def logout_view(request):
     logout(request)
     messages.error(request, 'Você foi deslogado!')
     return redirect('login')
 
+
 # --- Usuários --- #
 @login_required
 def informacoes_usuario(request):
     user = request.user
     return render(request, 'contas/informacoes_usuario.html', {'user': user})
+
 
 def verifica_usuario(request):
     if request.user.is_authenticated:

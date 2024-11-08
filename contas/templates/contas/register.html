@@ -1,11 +1,10 @@
 {% extends 'reusable/base.html' %}
 
-{% block title %}Bilioteca Trevizoli - Registrar{% endblock %}
+{% block title %}Biblioteca Trevizoli - Registrar{% endblock %}
 
 {% block content %}
     <div class="container-principal">
         <div class="container-secundario">
-
             <div class="primeira-coluna">
                 <h2 class="titulo titulo-primario">Seja muito bem-vindo!</h2>
                 <p class="descricao descricao-primaria">Para se manter conectado conosco</p>
@@ -22,24 +21,36 @@
                         <i class="bi bi-person-circle icone-modificado"></i>
                         <input type="text" name="username" id="register-username" class="form-control"
                                placeholder="Username" required>
+                        {% if form.username.errors %}
+                            <div class="erro-mensagem">{{ form.username.errors.0 }}</div>
+                        {% endif %}
                     </label>
 
                     <label class="rotulo-input" for="">
                         <i class="fas fa-envelope icone-modificado"></i>
                         <input type="email" name="email" id="register-email" class="form-control" placeholder="Email"
                                required>
+                        {% if form.email.errors %}
+                            <div class="erro-mensagem">{{ form.email.errors.0 }}</div>
+                        {% endif %}
                     </label>
 
                     <label class="rotulo-input" for="">
                         <i class="fas fa-lock icone-modificado"></i>
                         <input type="password" name="password1" id="register-password" class="form-control"
                                placeholder="Senha" required>
+                        {% if form.password1.errors %}
+                            <div class="erro-mensagem">{{ form.password1.errors.0 }}</div>
+                        {% endif %}
                     </label>
 
                     <label class="rotulo-input" for="">
                         <i class="fas fa-lock icone-modificado"></i>
                         <input type="password" name="password2" id="register-password2" class="form-control"
                                placeholder="Confirme a Senha" required>
+                        {% if form.password2.errors %}
+                            <div class="erro-mensagem">{{ form.password2.errors.0 }}</div>
+                        {% endif %}
                     </label>
 
                     <button type="submit" class="btn-cadastro">Cadastrar</button>
