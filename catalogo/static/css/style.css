@@ -1,7 +1,10 @@
-main {
-    height: 800px;
+html, body {
+    height: 100%;
+    margin: 0;
 }
 
-.card {
-    margin-top: -300px;
+main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
 }
