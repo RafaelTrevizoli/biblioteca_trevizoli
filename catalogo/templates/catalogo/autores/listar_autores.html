@@ -1,60 +1,52 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Autores</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-</head>
-<body>
-{% include 'reusable/header.html' %}
+{% extends 'reusable/base.html' %}
 
-<div class="container mt-5">
-    <h2 class="mb-4">Lista de Autores</h2>
+{% block title %}Biblioteca Trevizoli - Autores{% endblock %}
 
-    <form method="GET" action="{% url 'listar_autores' %}" class="mb-4">
-        <div class="input-group">
-            <input type="text" name="buscar" class="form-control" placeholder="Pesquise por nome ou biografia do autor"
-                   value="{{ request.GET.buscar }}">
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="mb-4">Lista de Autores</h2>
 
-            {% if request.GET.buscar %}
-                <a href="{% url 'listar_autores' %}" class="btn btn-secondary">Voltar</a>
-            {% endif %}
+        <form method="GET" action="{% url 'listar_autores' %}" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="buscar" class="form-control"
+                       placeholder="Pesquise por nome ou biografia do autor"
+                       value="{{ request.GET.buscar }}">
 
-            <button class="btn btn-primary" type="submit">
-                <i class="bi bi-search"></i> Pesquisar
-            </button>
-        </div>
-    </form>
+                {% if request.GET.buscar %}
+                    <a href="{% url 'listar_autores' %}" class="btn btn-secondary">Voltar</a>
+                {% endif %}
 
-    <div class="row">
-        {% if autores %}
-            {% for autor in autores %}
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ autor.nome }}</h5>
-                            <p class="card-text"><strong>Biografia:</strong>
-                                {{ autor.biografia|truncatechars:30 }}{% if autor.biografia|length > 30 %}...{% endif %}
-                            </p>
-                            <div class="d-flex justify-content-between">
-                                <a href="{% url 'detalhes_autor' autor.pk %}" class="btn btn-sm btn-success">
-                                    <i class="bi bi-info-circle"></i> Detalhes
-                                </a>
+                <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-search"></i> Pesquisar
+                </button>
+            </div>
+        </form>
+
+        <div class="row">
+            {% if autores %}
+                {% for autor in autores %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ autor.nome }}</h5>
+                                <p class="card-text"><strong>Biografia:</strong>
+                                    {{ autor.biografia|truncatechars:30 }}{% if autor.biografia|length > 30 %}
+                                        ...{% endif %}
+                                </p>
+                                <div class="d-flex justify-content-between">
+                                    <a href="{% url 'detalhes_autor' autor.pk %}" class="btn btn-sm btn-success">
+                                        <i class="bi bi-info-circle"></i> Detalhes
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12">
+                    <p class="text-center">Nenhum autor encontrado para sua pesquisa.</p>
                 </div>
-            {% endfor %}
-        {% else %}
-            <div class="col-12">
-                <p class="text-center">Nenhum autor encontrado para sua pesquisa.</p>
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
-</div>
-
-{% include 'reusable/footer.html' %}
-</body>
-</html>
+{% endblock %}

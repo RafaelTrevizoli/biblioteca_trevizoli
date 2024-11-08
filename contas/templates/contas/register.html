@@ -1,8 +1,54 @@
+{% extends 'reusable/base.html' %}
+
+{% block title %}Bilioteca Trevizoli - Registrar{% endblock %}
+
 {% block content %}
-    <h2>Register</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
-    </form>
+    <div class="container-principal">
+        <div class="container-secundario">
+
+            <div class="primeira-coluna">
+                <h2 class="titulo titulo-primario">Seja muito bem-vindo!</h2>
+                <p class="descricao descricao-primaria">Para se manter conectado conosco</p>
+                <p class="descricao descricao-primaria">Realize a criação da sua conta agora mesmo!</p>
+            </div>
+
+            <div class="segunda-coluna">
+                <h2 class="titulo titulo-secundario">Cadastre-se</h2>
+
+                <form class="formulario" action="{% url 'register' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <label class="rotulo-input" for="">
+                        <i class="bi bi-person-circle icone-modificado"></i>
+                        <input type="text" name="username" id="register-username" class="form-control"
+                               placeholder="Username" required>
+                    </label>
+
+                    <label class="rotulo-input" for="">
+                        <i class="fas fa-envelope icone-modificado"></i>
+                        <input type="email" name="email" id="register-email" class="form-control" placeholder="Email"
+                               required>
+                    </label>
+
+                    <label class="rotulo-input" for="">
+                        <i class="fas fa-lock icone-modificado"></i>
+                        <input type="password" name="password1" id="register-password" class="form-control"
+                               placeholder="Senha" required>
+                    </label>
+
+                    <label class="rotulo-input" for="">
+                        <i class="fas fa-lock icone-modificado"></i>
+                        <input type="password" name="password2" id="register-password2" class="form-control"
+                               placeholder="Confirme a Senha" required>
+                    </label>
+
+                    <button type="submit" class="btn-cadastro">Cadastrar</button>
+
+                    <a href="{% url 'login' %}" class="btn-login-cadastro">
+                        <p>Já tem uma conta? Realize seu login!</p>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}

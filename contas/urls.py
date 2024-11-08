@@ -1,10 +1,10 @@
 from django.urls import path
-from .views import RegisterView, login_view, logout_view, informacoes_usuario, verifica_usuario
+from . import views
 
 urlpatterns = [
-    path('register/', RegisterView.as_view(), name='register'),
-    path('login/', login_view, name='login'),
-    path('logout/', logout_view, name='logout'),
-    path('informacoes_usuario/', informacoes_usuario, name='informacoes_usuario'),
-    path('verifica_usuario/', verifica_usuario, name='verifica_usuario'),
+    path('register/', views.RegisterView.as_view(), name='register'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('informacoes_usuario/', views.informacoes_usuario, name='informacoes_usuario'),
+    path('verifica_usuario/', views.verifica_usuario, name='verifica_usuario'),
 ]

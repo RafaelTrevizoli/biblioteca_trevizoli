@@ -4,11 +4,13 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from .models import Livro, Autor, Editora, Genero, Tag, Emprestimo
 from .forms import LivroForm, AutorForm, EditoraForm, GeneroForm, TagForm
+from django.core.paginator import Paginator
 
 
 # --- Livros --- #
 def listar_livros(request):
     query = request.GET.get('buscar')
+
     if query:
         livros = Livro.objects.filter(
             Q(titulo__icontains=query) |
@@ -20,13 +22,24 @@ def listar_livros(request):
     else:
         livros = Livro.objects.all()
 
-    return render(request, 'catalogo/livros/listar_livros.html', {'livros': livros})
+    # --- Paginator --- #
+    paginator = Paginator(livros, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'catalogo/livros/listar_livros.html', {'page_obj': page_obj})
 
 
 @permission_required('', login_url='pagina_de_erro')
 def listar_livros_crud(request):
     livros = Livro.objects.all()
-    return render(request, 'catalogo/livros/listar_livros_crud.html', {'livros': livros})
+
+    # --- Paginator --- #
+    paginator = Paginator(livros, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'catalogo/livros/listar_livros_crud.html', {'page_obj': page_obj})
 
 
 @permission_required('', login_url='pagina_de_erro')
@@ -89,7 +102,13 @@ def listar_autores(request):
 @permission_required('', login_url='pagina_de_erro')
 def listar_autores_crud(request):
     autores = Autor.objects.all()
-    return render(request, 'catalogo/autores/listar_autores_crud.html', {'autores': autores})
+
+    # --- Paginator --- #
+    paginator = Paginator(autores, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'catalogo/autores/listar_autores_crud.html', {'page_obj': page_obj})
 
 
 @permission_required('', login_url='pagina_de_erro')
@@ -324,7 +343,7 @@ def obter_livro(request, livro_id):
 
         messages.info(request, 'Livro adicionado a sua conta!')
 
-        return redirect('meus_emprestimos')
+        return redirect(request.META.get('HTTP_REFERER'))
 
     else:
         messages.error(request, 'Este livro já foi adicionado a sua conta!')

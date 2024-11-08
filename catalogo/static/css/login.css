@@ -54,8 +54,7 @@
 
 .descricao {
     font-size: 14px;
-    font-weight: 300;
-    line-height: 30px;
+    font-weight: 400;
 }
 
 .descricao-primaria {
@@ -78,7 +77,29 @@
     transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
 }
 
+.btn-cadastro {
+    border-radius: 15px;
+    text-transform: uppercase;
+    color: #ffffff;
+    font-size: 10px;
+    padding: 10px 50px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 200px;
+    align-self: center;
+    margin-top: 1rem;
+    background-color: #0883d4;
+    border: 1px solid #0883d4;
+    transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
+}
+
 .btn-login:hover {
+    border-color: #0883d4;
+    background-color: #ffffff;
+    color: #0883d4;
+}
+
+.btn-cadastro:hover {
     border-color: #0883d4;
     background-color: #ffffff;
     color: #0883d4;
@@ -87,6 +108,7 @@
 .btn-login-cadastro {
     margin-top: 20px;
     text-decoration: none;
+    text-align: center;
     list-style-type: none;
     color: #0883d4;
     font-size: 15px;

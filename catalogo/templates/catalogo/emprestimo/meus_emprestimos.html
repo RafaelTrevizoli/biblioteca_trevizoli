@@ -1,81 +1,63 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meus Empréstimos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-</head>
-<body>
+{% extends 'reusable/base.html' %}
 
-{% include 'reusable/header.html' %}
+{% block title %}Biblioteca Trevizoli - Meus Empréstimos{% endblock %}
 
-<header class="bg-dark text-white py-4">
-    <div class="container text-center">
-        <h1 class="mb-0">Meus Empréstimos</h1>
-    </div>
-</header>
-
-<main>
-    <div class="container my-5">
-        {% if emprestimos %}
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover align-middle">
-                    <thead class="table-dark">
-                    <tr>
-                        <th scope="col">Título do Livro</th>
-                        <th scope="col">Autor</th>
-                        <th scope="col">Data de Empréstimo</th>
-                        <th scope="col">Data de Devolução</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Ação</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for emprestimo in emprestimos %}
+{% block content %}
+    <main>
+        <div class="container my-5">
+            {% if emprestimos %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle">
+                        <thead class="table-dark">
                         <tr>
-                            <td>{{ emprestimo.livro.titulo }}</td>
-                            <td>{{ emprestimo.livro.autor.nome }}</td>
-                            <td>{{ emprestimo.data_emprestimo|date:"d/m/Y" }}</td>
-                            <td>
-                                {% if emprestimo.data_devolucao %}
-                                    {{ emprestimo.data_devolucao|date:"d/m/Y" }}
-                                {% else %}
-                                    <span class="text-muted">Não definido</span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if emprestimo.devolvido %}
-                                    <span class="badge bg-success">Devolvido</span>
-                                {% else %}
-                                    <span class="badge bg-warning text-dark">Em andamento</span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                <a href="{% url 'visualizar_livro' emprestimo.livro.id %}"
-                                   class="btn btn-outline-primary btn-sm">
-                                    <i class="bi bi-book"></i> Ler
-                                </a>
-                                <a href="#"
-                                   class="btn btn-outline-danger btn-sm">
-                                    <i class="bi bi-x-circle"></i> Remover
-                                </a>
-                            </td>
+                            <th scope="col">Título do Livro</th>
+                            <th scope="col">Autor</th>
+                            <th scope="col">Data de Empréstimo</th>
+                            <th scope="col">Data de Devolução</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Ação</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% else %}
-            <div class="alert alert-info text-center" role="alert">
-                Você ainda não possui empréstimos de livros.
-            </div>
-        {% endif %}
-    </div>
-</main>
-
-{% include 'reusable/notificacoes.html'%}
-
-</body>
-</html>
+                        </thead>
+                        <tbody>
+                        {% for emprestimo in emprestimos %}
+                            <tr>
+                                <td>{{ emprestimo.livro.titulo }}</td>
+                                <td>{{ emprestimo.livro.autor.nome }}</td>
+                                <td>{{ emprestimo.data_emprestimo|date:"d/m/Y" }}</td>
+                                <td>
+                                    {% if emprestimo.data_devolucao %}
+                                        {{ emprestimo.data_devolucao|date:"d/m/Y" }}
+                                    {% else %}
+                                        <span class="text-muted">Não definido</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if emprestimo.devolvido %}
+                                        <span class="badge bg-success">Devolvido</span>
+                                    {% else %}
+                                        <span class="badge bg-warning text-dark">Em andamento</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'visualizar_livro' emprestimo.livro.id %}"
+                                       class="btn btn-outline-primary btn-sm">
+                                        <i class="bi bi-book"></i> Ler
+                                    </a>
+                                    <a href="#"
+                                       class="btn btn-outline-danger btn-sm">
+                                        <i class="bi bi-x-circle"></i> Remover
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info text-center" role="alert">
+                    Você ainda não possui empréstimos de livros.
+                </div>
+            {% endif %}
+        </div>
+    </main>
+{% endblock %}
