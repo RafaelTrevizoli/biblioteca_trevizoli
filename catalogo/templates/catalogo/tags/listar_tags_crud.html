@@ -17,7 +17,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for tag in tags %}
+            {% for tag in page_obj %}
                 <tr>
                     <td>{{ tag.id }}</td>
                     <td>{{ tag.nome }}</td>
@@ -40,5 +40,8 @@
             {% endfor %}
             </tbody>
         </table>
+    
+    {% include 'reusable/paginator.html' %}
+    
     </div>
 {% endblock %}

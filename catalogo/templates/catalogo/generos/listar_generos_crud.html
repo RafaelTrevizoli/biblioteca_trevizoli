@@ -17,7 +17,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for genero in generos %}
+            {% for genero in page_obj %}
                 <tr>
                     <td>{{ genero.id }}</td>
                     <td>{{ genero.nome }}</td>
@@ -40,5 +40,8 @@
             {% endfor %}
             </tbody>
         </table>
+    
+    {% include 'reusable/paginator.html' %}
+    
     </div>
 {% endblock %}

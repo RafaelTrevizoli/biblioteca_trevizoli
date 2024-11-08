@@ -88,6 +88,7 @@ def detalhes_livro(request, pk):
 # --- Autores --- #
 def listar_autores(request):
     query = request.GET.get('buscar')
+
     if query:
         autores = Autor.objects.filter(
             Q(nome__icontains=query) |
@@ -96,7 +97,12 @@ def listar_autores(request):
     else:
         autores = Autor.objects.all()
 
-    return render(request, 'catalogo/autores/listar_autores.html', {'autores': autores})
+    # --- Paginator --- #
+    paginator = Paginator(autores, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'catalogo/autores/listar_autores.html', {'page_obj': page_obj})
 
 
 @permission_required('', login_url='pagina_de_erro')
@@ -158,7 +164,12 @@ def detalhes_autor(request, pk):
 @permission_required('', login_url='pagina_de_erro')
 def listar_editoras_crud(request):
     editoras = Editora.objects.all()
-    return render(request, 'catalogo/editoras/listar_editoras_crud.html', {'editoras': editoras})
+
+    paginator = Paginator(editoras, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'catalogo/editoras/listar_editoras_crud.html', {'page_obj': page_obj})
 
 
 @permission_required('', login_url='pagina_de_erro')
@@ -209,7 +220,12 @@ def detalhes_editora(request, pk):
 @permission_required('', login_url='pagina_de_erro')
 def listar_generos_crud(request):
     generos = Genero.objects.all()
-    return render(request, 'catalogo/generos/listar_generos_crud.html', {'generos': generos})
+
+    paginator = Paginator(generos, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'catalogo/generos/listar_generos_crud.html', {'page_obj': page_obj})
 
 
 @permission_required('', login_url='pagina_de_erro')
@@ -260,7 +276,12 @@ def detalhes_genero(request, pk):
 @permission_required('', login_url='pagina_de_erro')
 def listar_tags_crud(request):
     tags = Tag.objects.all()
-    return render(request, 'catalogo/tags/listar_tags_crud.html', {'tags': tags})
+
+    paginator = Paginator(tags, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'catalogo/tags/listar_tags_crud.html', {'page_obj': page_obj})
 
 
 @permission_required('', login_url='pagina_de_erro')

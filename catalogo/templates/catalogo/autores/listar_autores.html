@@ -23,8 +23,8 @@
         </form>
 
         <div class="row">
-            {% if autores %}
-                {% for autor in autores %}
+            {% if page_obj %}
+                {% for autor in page_obj %}
                     <div class="col-md-4 mb-4">
                         <div class="card">
                             <div class="card-body">
@@ -48,5 +48,8 @@
                 </div>
             {% endif %}
         </div>
+
+        {% include 'reusable/paginator.html' %}
+    
     </div>
 {% endblock %}
