@@ -4,31 +4,24 @@
 
 {% block content %}
     <main>
+
         <div class="container my-5">
             {% if emprestimos %}
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover align-middle">
                         <thead class="table-dark">
                         <tr>
+                            <th scope="col">Usuário</th>
                             <th scope="col">Título do Livro</th>
-                            <th scope="col">Autor</th>
-                            <th scope="col">Data de Empréstimo</th>
-                            <th scope="col">Ação</th>
+                            <th scope="col">Data do Empréstimo</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for emprestimo in emprestimos %}
                             <tr>
-                                <td>{{ emprestimo.livro.titulo }}</td>
-                                <td>{{ emprestimo.livro.autor.nome }}</td>
-                                <td>{{ emprestimo.data_emprestimo|date:"d/m/Y" }}</td>
-                           
-                                <td>
-                                    <a href="{% url 'visualizar_livro_emprestimos' emprestimo.livro.id %}"
-                                       class="btn btn-outline-primary btn-sm">
-                                        <i class="bi bi-book"></i> Ler
-                                    </a>
-                                </td>
+                                <td>{{ emprestimo.usuario }}</td>
+                                <td>{{ emprestimo.livro }}</td>
+                                <td>{{ emprestimo.data|date:"d/m/Y" }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -36,7 +29,7 @@
                 </div>
             {% else %}
                 <div class="alert alert-info text-center" role="alert">
-                    Você ainda não possui empréstimos de livros.
+                    Nenhum empréstimo encontrado.
                 </div>
             {% endif %}
         </div>

@@ -4,17 +4,17 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from .forms import UserCreationForm
+from .forms import CustomUserCreationForm
 
 
 # --- Registro --- #
 class RegisterView(CreateView):
-    form_class = UserCreationForm
+    form_class = CustomUserCreationForm  # Altere para usar o CustomUserCreationForm
     template_name = 'contas/register.html'
     success_url = reverse_lazy('login')
 
     def form_valid(self, form):
-        # --- Chama o metodo pai para salvar o formulário e criar o usuario --- #
+        # Chama o metodo pai para salvar o formulário e criar o usuário
         response = super().form_valid(form)
         messages.success(self.request, 'Cadastro realizado com sucesso! Faça login para acessar sua conta.')
         return response

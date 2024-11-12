@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import datetime, timedelta
 
 class Autor(models.Model):
     nome = models.CharField(max_length=100)
@@ -59,8 +58,6 @@ class Emprestimo(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     livro = models.ForeignKey(Livro, on_delete=models.CASCADE)
     data_emprestimo = models.DateTimeField(auto_now_add=True)
-    data_devolucao = models.DateTimeField(null=True, blank=True)
-    devolvido = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'emprestimos'
@@ -68,8 +65,16 @@ class Emprestimo(models.Model):
     def __str__(self):
         return f"{self.usuario.username} - {self.livro.titulo}"
 
-    def calcular_data_devolucao(self):
-        """Calcula a data de devolução padrão como 30 dias a partir da data de empréstimo."""
-        if not self.data_devolucao:
-            self.data_devolucao = self.data_emprestimo + timedelta(days=30)
-            self.save()
+class EmprestimoUsuarioView(models.Model):
+    usuario = models.CharField(max_length=150, primary_key=True)  # Definindo `usuario` como chave primária
+    livro = models.CharField(max_length=200)
+    data = models.DateTimeField()
+
+    class Meta:
+        managed = False  # Django não vai tentar criar esta view no banco
+        db_table = 'emprestimos_usuario'  # Nome da view no banco de dados
+        verbose_name = "Empréstimo por Usuário"
+        verbose_name_plural = "Empréstimos por Usuário"
+
+    def __str__(self):
+        return f"{self.usuario} - {self.livro}"

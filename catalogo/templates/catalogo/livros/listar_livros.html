@@ -23,6 +23,27 @@
             </div>
         </form>
 
+        <!-- Exibição do Top 3 Livros Mais Emprestados -->
+        <div class="mb-4">
+            <h4>Top 3 Livros Mais Emprestados</h4>
+            <div class="row">
+                {% for livro in top_livros %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ livro.1 }}</h5>
+                                <p class="card-text">Livro obtido: {{ livro.2 }} vezes</p>
+                                <div class="d-flex justify-content-end">
+                                    <i class="bi bi-star-fill text-warning" style="font-size: 1.5rem;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+
         <div class="row">
             {% if page_obj %}
                 {% for livro in page_obj %}
@@ -70,7 +91,7 @@
             {% endif %}
         </div>
 
-       {% include 'reusable/paginator.html' %}
+        {% include 'reusable/paginator.html' %}
 
     </div>
 {% endblock %}

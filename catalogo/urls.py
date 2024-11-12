@@ -14,12 +14,16 @@ urlpatterns = [
     # --- Pasta Raiz --- #
     path('', views.listar_livros, name='listar_livros'),
 
+    # --- Chicão --- #
+    # --- View para o admin vizualizar os livros "emprestados" aos usuários --- #
+    path('emprestimos/', views.listar_emprestimos, name='listar_emprestimos'),
+
     # --- Emprestimos --- #
 
     path('meus-emprestimos/', views.meus_emprestimos, name='meus_emprestimos'),
-    path('livro/<int:livro_id>/', views.visualizar_livro, name='visualizar_livro'),
+    path('livro/<int:livro_id>/', views.visualizar_livro_emprestimos, name='visualizar_livro_emprestimos'),
     path('livro/<int:livro_id>/', views.detalhes_livro, name='detalhes_livro'),
-    path('livro/<int:livro_id>/obter/', views.obter_livro, name='obter_livro'),  # Nova rota
+    path('livro/<int:livro_id>/obter/', views.obter_livro, name='obter_livro'),
 
     # --- Livros --- #
     path('livros/', views.listar_livros, name='listar_livros'),

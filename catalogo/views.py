@@ -1,10 +1,12 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from .models import Livro, Autor, Editora, Genero, Tag, Emprestimo, EmprestimoUsuarioView
+from .forms import LivroForm, AutorForm, EditoraForm, GeneroForm, TagForm
 from django.db.models import Q
+from django.db import connection
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
-from .models import Livro, Autor, Editora, Genero, Tag, Emprestimo
-from .forms import LivroForm, AutorForm, EditoraForm, GeneroForm, TagForm
 from django.core.paginator import Paginator
+
 
 
 # --- Livros --- #
@@ -27,7 +29,14 @@ def listar_livros(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'catalogo/livros/listar_livros.html', {'page_obj': page_obj})
+    # Obter os top 3 livros mais emprestados
+    top_livros = get_top_3_livros()
+
+    # Passando os dados para o template
+    return render(request, 'catalogo/livros/listar_livros.html', {
+        'page_obj': page_obj,
+        'top_livros': top_livros
+    })
 
 
 @permission_required('', login_url='pagina_de_erro')
@@ -340,14 +349,15 @@ def pagina_de_erro(request):
     return render(request, 'reusable/pag_erro.html')
 
 
+# --- Emprestimos --- #
 def meus_emprestimos(request):
-    emprestimos = Emprestimo.objects.filter(usuario=request.user, devolvido=False)
+    emprestimos = Emprestimo.objects.filter(usuario=request.user)
     return render(request, 'catalogo/emprestimo/meus_emprestimos.html', {'emprestimos': emprestimos})
 
 
-def visualizar_livro(request, livro_id):
+def visualizar_livro_emprestimos(request, livro_id):
     livro = get_object_or_404(Livro, id=livro_id)
-    emprestimo = Emprestimo.objects.filter(usuario=request.user, livro=livro, devolvido=False).first()
+    emprestimo = Emprestimo.objects.filter(usuario=request.user, livro=livro).first()
 
     if emprestimo:
         return render(request, 'catalogo/emprestimo/visualizar_livro.html', {'livro': livro})
@@ -359,7 +369,7 @@ def visualizar_livro(request, livro_id):
 def obter_livro(request, livro_id):
     livro = get_object_or_404(Livro, id=livro_id)
 
-    if not Emprestimo.objects.filter(usuario=request.user, livro=livro, devolvido=False).exists():
+    if not Emprestimo.objects.filter(usuario=request.user, livro=livro).exists():
         Emprestimo.objects.create(usuario=request.user, livro=livro)
 
         messages.info(request, 'Livro adicionado a sua conta!')
@@ -370,3 +380,21 @@ def obter_livro(request, livro_id):
         messages.error(request, 'Este livro já foi adicionado a sua conta!')
 
         return redirect(request.META.get('HTTP_REFERER'))  # --- Redireciona de volta para a página anterior --- #
+
+
+# --- Chicão --- #
+
+# --- View para o admin vizualizar os livros "emprestados" aos usuários --- #
+
+def listar_emprestimos(request):
+    emprestimos = EmprestimoUsuarioView.objects.all()  # Busca todos os registros
+    return render(request, 'catalogo/emprestimo/emprestimos_admin.html', {'emprestimos': emprestimos})
+
+
+# --- procidure  --- #
+
+def get_top_3_livros():
+    with connection.cursor() as cursor:
+        cursor.callproc('top_3_livros_mais_emprestados')
+        result = cursor.fetchall()
+        return result

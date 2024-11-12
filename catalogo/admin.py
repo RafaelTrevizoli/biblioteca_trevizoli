@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Autor, Livro, Editora, Genero,Tag
+from .models import Autor, Livro, Editora, Genero,Tag, EmprestimoUsuarioView
+
 
 @admin.register(Autor)
 class AutorAdmin(admin.ModelAdmin):
@@ -27,3 +28,14 @@ class LivroAdmin(admin.ModelAdmin):
     list_filter = ('autor', 'editora', 'genero')
     search_fields = ('titulo',)
 
+
+@admin.register(EmprestimoUsuarioView)
+class EmprestimoUsuarioViewAdmin(admin.ModelAdmin):
+    list_display = ('usuario', 'livro', 'data')
+    ordering = ('usuario', 'livro', 'data')
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False

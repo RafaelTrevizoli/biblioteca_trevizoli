@@ -40,13 +40,29 @@
                     </li>
                 {% endif %}
 
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'verifica_usuario' %}">
-                        <i class="fas fa-user-circle"></i> Perfil
-                    </a>
-                </li>
+                {% if user.is_staff %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <i class="fas fa-cogs"></i> Gestão - USUÁRIOS
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'listar_emprestimos' %}"><i
+                                    class="bi bi-people-fill"></i>
+                                Empréstimos</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
 
-                {% if user.is_authenticated %}
+                {% if not user.is_staff %}
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'verifica_usuario' %}">
+                            <i class="fas fa-user-circle"></i> Perfil
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if user.is_authenticated and not user.is_staff %}
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{% url 'meus_emprestimos' %}">
                             <i class="bi bi-book"></i> Meus livros
