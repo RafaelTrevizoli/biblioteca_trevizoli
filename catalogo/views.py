@@ -401,3 +401,5 @@ def get_top_3_livros():
         cursor.callproc('top_3_livros_mais_emprestados')
         result = cursor.fetchall()
         return result
+    
+    

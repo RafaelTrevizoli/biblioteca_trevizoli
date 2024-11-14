@@ -68,3 +68,4 @@ urlpatterns = [
     path('tags/<int:pk>/', views.detalhes_tag, name='detalhes_tag'),
 
 ]
+
