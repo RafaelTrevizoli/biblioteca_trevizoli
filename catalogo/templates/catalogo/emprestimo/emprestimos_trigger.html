@@ -1,0 +1,21 @@
+<h1>Logs de Empréstimos</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Usuário</th>
+            <th>Livro</th>
+            <th>Ação</th>
+            <th>Data</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.usuario.username }}</td>
+            <td>{{ log.livro.titulo }}</td>
+            <td>{{ log.acao }}</td>
+            <td>{{ log.data }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
