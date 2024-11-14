@@ -65,14 +65,25 @@ class Emprestimo(models.Model):
     def __str__(self):
         return f"{self.usuario.username} - {self.livro.titulo}"
 
+class Log(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    livro = models.ForeignKey(Livro, on_delete=models.CASCADE)
+    data = models.DateTimeField()
+
+    class Meta:
+        db_table = 'logs'
+
+    def __str__(self):
+        return f"{self.usuario.username} - {self.livro.titulo} "
+
 class EmprestimoUsuarioView(models.Model):
-    usuario = models.CharField(max_length=150, primary_key=True)  # Definindo `usuario` como chave primária
+    usuario = models.CharField(max_length=150, primary_key=True)
     livro = models.CharField(max_length=200)
     data = models.DateTimeField()
 
     class Meta:
-        managed = False  # Django não vai tentar criar esta view no banco
-        db_table = 'emprestimos_usuario'  # Nome da view no banco de dados
+        managed = False
+        db_table = 'emprestimos_usuario'
         verbose_name = "Empréstimo por Usuário"
         verbose_name_plural = "Empréstimos por Usuário"
 

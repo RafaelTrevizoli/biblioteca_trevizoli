@@ -1,4 +1,4 @@
-from .models import Livro, Autor, Editora, Genero, Tag, Emprestimo, EmprestimoUsuarioView
+from .models import Livro, Autor, Editora, Genero, Tag, Emprestimo, EmprestimoUsuarioView, Log
 from .forms import LivroForm, AutorForm, EditoraForm, GeneroForm, TagForm
 from django.db.models import Q
 from django.db import connection
@@ -6,8 +6,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.core.paginator import Paginator
-
-
 
 # --- Livros --- #
 def listar_livros(request):
@@ -387,11 +385,16 @@ def obter_livro(request, livro_id):
 # --- View para o admin vizualizar os livros "emprestados" aos usuários --- #
 
 def listar_emprestimos(request):
-    emprestimos = EmprestimoUsuarioView.objects.all()  # Busca todos os registros
-    return render(request, 'catalogo/emprestimo/emprestimos_admin.html', {'emprestimos': emprestimos})
+    emprestimos = EmprestimoUsuarioView.objects.all()
+    return render(request, 'catalogo/emprestimo/emprestimos_view.html', {'emprestimos': emprestimos})
 
+# --- Trigger para o admin vizualizar os livros "emprestados" aos usuários --- #
 
-# --- procidure  --- #
+def logs_view(request):
+    logs = Log.objects.all()
+    return render(request, 'catalogo/emprestimo/emprestimos_trigger.html', {'logs': logs})
+
+# --- Procidure para listar os top 3 livros mais obtidos --- #
 
 def get_top_3_livros():
     with connection.cursor() as cursor:
