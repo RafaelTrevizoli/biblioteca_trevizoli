@@ -38,7 +38,15 @@ BEGIN
     LIMIT 3;
 END;
 
+-- Trigger criada para listar os logs dos usuários que realizaram emprestimos.
 
+CREATE TRIGGER log_emprestimo
+AFTER INSERT ON emprestimos
+FOR EACH ROW
+BEGIN
+    INSERT INTO logs (usuario_id, livro_id, acao, data)
+    VALUES (NEW.usuario_id, NEW.livro_id, 'Empréstimo realizado', NOW());
+END;
 
 
 
