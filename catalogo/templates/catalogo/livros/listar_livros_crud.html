@@ -3,8 +3,27 @@
 {% block title %}Biblioteca Trevizoli - Crud Livro{% endblock %}
 
 {% block content %}
+
     <div class="container mt-5">
         <h2 class="mb-4">Gerenciar Livros</h2>
+
+        <!-- Barra de Pesquisa -->
+        <form method="GET" action="{% url 'listar_livros_crud' %}" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="buscar" class="form-control"
+                       placeholder="Pesquise por título, autor, editora, gênero ou tag"
+                       value="{{ request.GET.buscar }}">
+
+                {% if request.GET.buscar %}
+                    <a href="{% url 'listar_livros_crud' %}" class="btn btn-secondary">Voltar</a>
+                {% endif %}
+
+                <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-search"></i> Pesquisar
+                </button>
+            </div>
+        </form>
+    
         <a href="{% url 'criar_livro' %}" class="btn btn-primary mb-3">
             <i class="bi bi-plus-circle"></i> Adicionar Livro
         </a>
@@ -62,6 +81,6 @@
         </table>
 
         {% include 'reusable/paginator.html' %}
-    
+
     </div>
 {% endblock %}

@@ -1,4 +1,4 @@
-from .models import Livro, Autor, Editora, Genero, Tag, Emprestimo, EmprestimoUsuarioView, Log
+from .models import Livro, Autor, Editora, Genero, Tag, Emprestimo, Log
 from .forms import LivroForm, AutorForm, EditoraForm, GeneroForm, TagForm
 from django.db.models import Q
 from django.db import connection
@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.core.paginator import Paginator
+
 
 # --- Livros --- #
 def listar_livros(request):
@@ -39,7 +40,18 @@ def listar_livros(request):
 
 @permission_required('', login_url='pagina_de_erro')
 def listar_livros_crud(request):
-    livros = Livro.objects.all()
+    query = request.GET.get('buscar')
+
+    if query:
+        livros = Livro.objects.filter(
+            Q(titulo__icontains=query) |
+            Q(autor__nome__icontains=query) |
+            Q(editora__nome__icontains=query) |
+            Q(genero__nome__icontains=query) |
+            Q(tags__nome__icontains=query)
+        ).distinct()
+    else:
+        livros = Livro.objects.all()
 
     # --- Paginator --- #
     paginator = Paginator(livros, 9)
@@ -114,7 +126,15 @@ def listar_autores(request):
 
 @permission_required('', login_url='pagina_de_erro')
 def listar_autores_crud(request):
-    autores = Autor.objects.all()
+    query = request.GET.get('buscar')
+
+    if query:
+        autores = Autor.objects.filter(
+            Q(nome__icontains=query) |
+            Q(biografia__icontains=query)
+        ).distinct()
+    else:
+        autores = Autor.objects.all()
 
     # --- Paginator --- #
     paginator = Paginator(autores, 9)
@@ -170,7 +190,15 @@ def detalhes_autor(request, pk):
 
 @permission_required('', login_url='pagina_de_erro')
 def listar_editoras_crud(request):
-    editoras = Editora.objects.all()
+    query = request.GET.get('buscar')
+
+    if query:
+        editoras = Editora.objects.filter(
+            Q(nome__icontains=query) |
+            Q(endereco__icontains=query)
+        ).distinct()
+    else:
+        editoras = Editora.objects.all()
 
     paginator = Paginator(editoras, 9)
     page_number = request.GET.get('page')
@@ -226,7 +254,14 @@ def detalhes_editora(request, pk):
 
 @permission_required('', login_url='pagina_de_erro')
 def listar_generos_crud(request):
-    generos = Genero.objects.all()
+    query = request.GET.get('buscar')
+
+    if query:
+        generos = Genero.objects.filter(
+            Q(nome__icontains=query)
+        ).distinct()
+    else:
+        generos = Genero.objects.all()
 
     paginator = Paginator(generos, 9)
     page_number = request.GET.get('page')
@@ -282,7 +317,14 @@ def detalhes_genero(request, pk):
 
 @permission_required('', login_url='pagina_de_erro')
 def listar_tags_crud(request):
-    tags = Tag.objects.all()
+    query = request.GET.get('buscar')
+
+    if query:
+        tags = Tag.objects.filter(
+            Q(nome__icontains=query)
+        ).distinct()
+    else:
+        tags = Tag.objects.all()
 
     paginator = Paginator(tags, 9)
     page_number = request.GET.get('page')
@@ -382,17 +424,33 @@ def obter_livro(request, livro_id):
 
 # --- Chicão --- #
 
-# --- View para o admin vizualizar os livros "emprestados" aos usuários --- #
-
-def listar_emprestimos(request):
-    emprestimos = EmprestimoUsuarioView.objects.all()
-    return render(request, 'catalogo/emprestimo/emprestimos_view.html', {'emprestimos': emprestimos})
-
 # --- Trigger para o admin vizualizar os livros "emprestados" aos usuários --- #
 
+from django.db.models import Q
+
+
 def logs_view(request):
+    query = request.GET.get('q')
+    order = request.GET.get('order', 'recent')
+
     logs = Log.objects.all()
-    return render(request, 'catalogo/emprestimo/emprestimos_trigger.html', {'logs': logs})
+
+    # Filtrando logs por nome de usuário
+    if query:
+        logs = logs.filter(Q(usuario__username__icontains=query))
+
+    # Ordenando logs por data
+    if order == 'recent':
+        logs = logs.order_by('-data')  # Mais recente
+    else:
+        logs = logs.order_by('data')  # Mais antigo
+
+    return render(request, 'catalogo/emprestimo/emprestimos_log.html', {
+        'logs': logs,
+        'query': query,
+        'order': order,
+    })
+
 
 # --- Procidure para listar os top 3 livros mais obtidos --- #
 
@@ -401,5 +459,3 @@ def get_top_3_livros():
         cursor.callproc('top_3_livros_mais_emprestados')
         result = cursor.fetchall()
         return result
-    
-    

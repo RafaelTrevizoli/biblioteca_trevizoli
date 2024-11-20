@@ -1,0 +1,57 @@
+{% extends 'reusable/base.html' %}
+
+{% block title %}Biblioteca Trevizoli - Logs de Empréstimos{% endblock %}
+
+{% block content %}
+    <main>
+        <div class="container my-5">
+            <form method="GET" class="row g-3 mb-4">
+
+                <div class="input-group">
+                    <input type="text" name="q" value="{{ query|default:'' }}" class="form-control"
+                           placeholder="Pesquisar por usuário">
+
+                    {% if request.GET.q %}
+                        <a href="{% url 'logs' %}" class="btn btn-secondary">Voltar</a>
+                    {% endif %}
+
+                    <button type="submit" name="order" value="recent"
+                            class="btn btn-primary {% if order == 'recent' %}active{% endif %}">
+                        Mais Recentes
+                    </button>
+                    <button type="submit" name="order" value="oldest"
+                            class="btn btn-secondary {% if order == 'oldest' %}active{% endif %}">
+                        Mais Antigos
+                    </button>
+                </div>
+            </form>
+
+            {% if logs %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle">
+                        <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Usuário</th>
+                            <th scope="col">Título do Livro</th>
+                            <th scope="col">Data do Empréstimo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for log in logs %}
+                            <tr>
+                                <td>{{ log.usuario.username }}</td>
+                                <td>{{ log.livro.titulo }}</td>
+                                <td>{{ log.data|date:"d/m/Y" }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info text-center" role="alert">
+                    Nenhum log encontrado.
+                </div>
+            {% endif %}
+        </div>
+    </main>
+{% endblock %}

@@ -75,17 +75,3 @@ class Log(models.Model):
 
     def __str__(self):
         return f"{self.usuario.username} - {self.livro.titulo} "
-
-class EmprestimoUsuarioView(models.Model):
-    usuario = models.CharField(max_length=150, primary_key=True)
-    livro = models.CharField(max_length=200)
-    data = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'emprestimos_usuario'
-        verbose_name = "Empréstimo por Usuário"
-        verbose_name_plural = "Empréstimos por Usuário"
-
-    def __str__(self):
-        return f"{self.usuario} - {self.livro}"

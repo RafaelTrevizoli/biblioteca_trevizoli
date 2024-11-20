@@ -15,8 +15,6 @@ urlpatterns = [
     path('', views.listar_livros, name='listar_livros'),
 
     # --- Chicão --- #
-    # --- View para o admin vizualizar os livros "emprestados" aos usuários --- #
-    path('emprestimos/', views.listar_emprestimos, name='listar_emprestimos'),
 
     # --- Trigger para o admin vizualizar os livros "emprestados" aos usuários --- #
     path('logs/', views.logs_view, name='logs'),  # Adiciona a URL para exibir os logs
