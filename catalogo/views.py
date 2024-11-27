@@ -11,17 +11,25 @@ from django.core.paginator import Paginator
 # --- Livros --- #
 def listar_livros(request):
     query = request.GET.get('buscar')
+    genero_id = request.GET.get('genero')
+    tag_id = request.GET.get('tag')
+
+    livros = Livro.objects.all()
 
     if query:
-        livros = Livro.objects.filter(
+        livros = livros.filter(
             Q(titulo__icontains=query) |
             Q(autor__nome__icontains=query) |
             Q(editora__nome__icontains=query) |
             Q(genero__nome__icontains=query) |
             Q(tags__nome__icontains=query)
         ).distinct()
-    else:
-        livros = Livro.objects.all()
+
+    if genero_id:
+        livros = livros.filter(genero__id=genero_id)
+
+    if tag_id:
+        livros = livros.filter(tags__id=tag_id)
 
     # --- Paginator --- #
     paginator = Paginator(livros, 9)
@@ -31,12 +39,17 @@ def listar_livros(request):
     # Obter os top 3 livros mais emprestados
     top_livros = get_top_3_livros()
 
+    # Obter listas para os filtros
+    generos = Genero.objects.all()
+    tags = Tag.objects.all()
+
     # Passando os dados para o template
     return render(request, 'catalogo/livros/listar_livros.html', {
         'page_obj': page_obj,
-        'top_livros': top_livros
+        'top_livros': top_livros,
+        'generos': generos,
+        'tags': tags,
     })
-
 
 @permission_required('', login_url='pagina_de_erro')
 def listar_livros_crud(request):

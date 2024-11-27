@@ -6,6 +6,43 @@
     <div class="container mt-5">
         <h2 class="mb-4">Lista de Livros Disponíveis</h2>
 
+        <form method="GET" action="{% url 'listar_livros' %}" class="mb-4">
+            <div class="row">
+                <!-- Filtro por Gênero -->
+                <div class="col-md-4 mb-2">
+                    <select name="genero" class="form-select">
+                        <option value="">Todos os Gêneros</option>
+                        {% for genero in generos %}
+                            <option value="{{ genero.id }}"
+                                    {% if request.GET.genero == genero.id|stringformat:"s" %}selected{% endif %}>
+                                {{ genero.nome }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Filtro por Tag -->
+                <div class="col-md-4 mb-2">
+                    <select name="tag" class="form-select">
+                        <option value="">Todas as Tags</option>
+                        {% for tag in tags %}
+                            <option value="{{ tag.id }}"
+                                    {% if request.GET.tag == tag.id|stringformat:"s" %}selected{% endif %}>
+                                {{ tag.nome }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Botão de Submissão -->
+                <div class="col-md-4 mb-2 d-flex">
+                    <button class="btn btn-primary w-100" type="submit">
+                        <i class="bi bi-funnel"></i> Filtrar
+                    </button>
+                </div>
+            </div>
+        </form>
+
         <!-- Barra de Pesquisa -->
         <form method="GET" action="{% url 'listar_livros' %}" class="mb-4">
             <div class="input-group">
