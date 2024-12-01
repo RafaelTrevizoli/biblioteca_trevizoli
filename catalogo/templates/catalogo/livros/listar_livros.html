@@ -60,34 +60,37 @@
             </div>
         </form>
 
-        <!-- Exibição do Top 3 Livros Mais Emprestados -->
-        <div class="mb-5">
-            <h4 class="text-center mb-4">Top 3 Livros Mais Emprestados</h4>
-            <div class="row">
-                {% for livro in top_livros %}
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 shadow-sm border-0">
-                            <div class="card-img-top position-relative"
-                                 style="height: 200px; background-color: #f0f0f0;">
-                                <i class="bi bi-book-half text-secondary position-absolute top-50 start-50 translate-middle"
-                                   style="font-size: 3rem;"></i>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title text-center"><a
-                                        href="{% url 'detalhes_livro' pk=livro.0 %}">{{ livro.1 }}</a>
-                                </h5>
-                                <p class="card-text text-center text-muted">Emprestado {{ livro.2 }} vezes</p>
-                            </div>
-                            <div class="card-footer bg-transparent border-0">
-                                <div class="d-flex justify-content-center">
-                                    <i class="bi bi-star-fill text-warning" style="font-size: 1.5rem;"></i>
+        {% if not request.GET.buscar and not request.GET.genero and not request.GET.tag %}
+            <!-- Exibição do Top 3 Livros Mais Emprestados -->
+            <div class="mb-5">
+                <h4 class="text-center mb-4">Top 3 Livros Mais Emprestados</h4>
+                <div class="row">
+                    {% for livro in top_livros %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 shadow-sm border-0">
+                                <div class="card-img-top position-relative"
+                                     style="height: 200px; background-color: #f0f0f0;">
+                                    <i class="bi bi-book-half text-secondary position-absolute top-50 start-50 translate-middle"
+                                       style="font-size: 3rem;"></i>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title text-center"><a
+                                            href="{% url 'detalhes_livro' pk=livro.0 %}">{{ livro.1 }}</a>
+                                    </h5>
+                                    <p class="card-text text-center text-muted">Emprestado {{ livro.2 }} vezes</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <div class="d-flex justify-content-center">
+                                        <i class="bi bi-star-fill text-warning" style="font-size: 1.5rem;"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
-        </div>
+        {% endif %}
+
 
 
         <div class="row">

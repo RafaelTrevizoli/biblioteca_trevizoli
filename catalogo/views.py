@@ -442,6 +442,7 @@ def obter_livro(request, livro_id):
 from django.db.models import Q
 
 
+@permission_required('', login_url='pagina_de_erro')
 def logs_view(request):
     query = request.GET.get('q')
     order = request.GET.get('order', 'recent')
